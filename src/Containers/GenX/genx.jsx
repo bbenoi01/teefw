@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import Individual from './components/Individual';
+import Multiple from './components/Multiple';
 
 import { 
-    topicToggle
+    topicToggle,
+    genxToggle
  } from '../../Actions/appActions';
 
 export default class GenX extends Component {
@@ -12,7 +15,15 @@ export default class GenX extends Component {
         dispatch(topicToggle(value));
     }
 
+    handleGenXSelect = (e) => {
+        const { dispatch } = this.props;
+        const { value } = e.target;
+        dispatch(genxToggle(value))
+    }
+
     render() {
+        const { genx } = this.props;
+
         return (
             <div className="app">
                 <div className="container-fluid">
@@ -34,8 +45,22 @@ export default class GenX extends Component {
                                     </select>
                                     <br/>
                                     <br/>
-                                    <button value='' onClick={this.handleTopicSelect} className="btn btn-outline-danger">Back</button>
-
+                                    {genx === 'GX1' ? (
+                                        <Fragment>
+                                            <button value='' onClick={this.handleGenXSelect} className="btn btn-outline-danger">Back</button>
+                                            <Individual/>
+                                        </Fragment>
+                                    ) : genx === 'GX2' ? (
+                                        <Fragment>
+                                            <button value='' onClick={this.handleGenXSelect} className="btn btn-outline-danger">Back</button>
+                                            <Multiple/>
+                                        </Fragment>
+                                    ) : (
+                                        <div className="col-s-12">
+                                            <button value='GX1' onClick={this.handleGenXSelect} className="btn btn-outline-primary">Individual</button>
+                                            <button value='GX2' onClick={this.handleGenXSelect} className="btn btn-outline-primary">Multiple</button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
